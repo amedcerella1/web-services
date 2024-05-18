@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Futuristic AV Advertisement</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Futuristic AV Advertisement</h1>
+        <nav>
+            <ul>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#more-info">More Information</a></li>
+                <li><a href="#contact">Contact Us</a></li>
+                <li><a href="#chat">Chat</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="about">
+        <h2>About Us</h2>
+        <p>we are pioneers in audiovisual advertising, dedicated to bringing your vision to life with cutting-edge technology. Our expertise lies in delivering the best design solutions for any application and event, ensuring your message is communicated with clarity and impact.
+
+            With a commitment to innovation and excellence, Skarem transforms ideas into immersive experiences that captivate audiences and elevate brands. Whether it's a corporate event, a product launch, or a promotional campaign, we provide tailored audiovisual solutions that meet the unique needs of each project. your vision to life with cutting-edge technology.</p>
+    </section>
+
+    <section id="more-info">
+        <h2>More Information</h2>
+        <p>Discover our range of services and how we can help you reach your audience in new and exciting ways.</p>
+    </section>
+
+    <section id="contact">
+        <h2>Contact Us</h2>
+        <form id="contact-form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" required></textarea>
+            <button type="submit">Send</button>
+        </form>
+    </section>
+
+    <section id="chat">
+        <h2>Chat with Us</h2>
+        <input type="text" id="userInput" placeholder="Ask a question about your project">
+        <button onclick="sendMessage()">Send</button>
+        <p id="chatResponse"></p>
+    </section>
+
+    <script>
+        async function sendMessage() {
+            const userMessage = document.getElementById('userInput').value;
+            const response = await fetch('/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ message: userMessage })
+            });
+            const data = await response.json();
+            document.getElementById('chatResponse').innerText = data;
+        }
+
+        document.getElementById('contact-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const response = await fetch('/contact', {
+                method: 'POST',
+                body: formData
+            });
+            const result = await response.text();
+            alert(result);
+        });
+    </script>
+</body>
+</html>
